@@ -1,6 +1,7 @@
 == Project Specification
 
 Create a simple rails application to upload the sample pdf and parse the data to store in database and list it on homepage.
+Sample document is in doc/
 
 1. Homepage
 
