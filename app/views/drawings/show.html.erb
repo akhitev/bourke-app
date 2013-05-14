@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Project:</b>
+  <%= @drawing.project %>
+</p>
+
+<p>
+  <b>Location:</b>
+  <%= @drawing.location %>
+</p>
+
+<p>
+  <b>Drawing:</b>
+  <%= @drawing.drawing %>
+</p>
+
+
+<%= link_to 'Edit', edit_drawing_path(@drawing) %> |
+<%= link_to 'Back', drawings_path %>
