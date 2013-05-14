@@ -1,4 +1,7 @@
 BourkeApp::Application.routes.draw do
+  resources :drawings
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
