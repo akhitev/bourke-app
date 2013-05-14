@@ -32,12 +32,20 @@ class DrawingsController < ApplicationController
     end
   end
 
-  # GET /drawings/1/edit
-  def edit
-    @drawing = Drawing.find(params[:id])
+  def upload
+    uploaded_io = params[:file]
+    File.open(Rails.root.join('uploads', uploaded_io.original_filename), 'wb') do |file|
+      file.write(uploaded_io.read)
+    end
+      render :layout => false, :status => (:ok)
+  rescue e
+      @error = e.message
+      logger.warn("upload failed " + e.stack_trace)
+      render :layout => false, :status => (:error)
   end
 
-  # POST /drawings
+
+    # POST /drawings
   # POST /drawings.json
   def create
     @drawing = Drawing.new(params[:drawing])
@@ -50,34 +58,6 @@ class DrawingsController < ApplicationController
         format.html { render action: "new" }
         format.json { render json: @drawing.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # PUT /drawings/1
-  # PUT /drawings/1.json
-  def update
-    @drawing = Drawing.find(params[:id])
-
-    respond_to do |format|
-      if @drawing.update_attributes(params[:drawing])
-        format.html { redirect_to @drawing, notice: 'Drawing was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @drawing.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /drawings/1
-  # DELETE /drawings/1.json
-  def destroy
-    @drawing = Drawing.find(params[:id])
-    @drawing.destroy
-
-    respond_to do |format|
-      format.html { redirect_to drawings_url }
-      format.json { head :no_content }
     end
   end
 end

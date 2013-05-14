@@ -1,0 +1,7 @@
+<%= remotipart_response do %>
+<% if @error.nil?  %>
+  $('form').append('<div class="notice">uploaded successfully</div>');
+<% else %>
+  $('form').append('<div class="error">Error occured during upload</div>');
+<% end %>
+<% end %>
