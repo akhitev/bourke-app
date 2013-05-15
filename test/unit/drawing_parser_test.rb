@@ -9,7 +9,7 @@ require 'test_helper'
       #clean previous result
       txt_file = Rails.root.join('doc', "sample_drawing.txt")
       puts `rm  #{txt_file}`
-      drawing = @parser.parse(Rails.root.join('doc',"sample_drawing.pdf"))
+      drawing = @parser.parse_and_save(Rails.root.join('doc',"sample_drawing.pdf"))
       check_drawing drawing
     end
 

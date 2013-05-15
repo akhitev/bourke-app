@@ -6,10 +6,11 @@ class DrawingParser
   end
 
 
-  def parse(file_name)
+  def parse_and_save(file_name)
     Rails.logger.debug "parsing file #{file_name}"
     execute_command(file_name)
     drawing = process_txt(file_name)
+    drawing.save
     return drawing
   rescue => e
     Rails.logger.error("error during processing file : #{e.message}")

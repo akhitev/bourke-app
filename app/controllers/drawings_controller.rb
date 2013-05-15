@@ -37,7 +37,10 @@ class DrawingsController < ApplicationController
     File.open(Rails.root.join('uploads', uploaded_io.original_filename), 'wb') do |file|
       file.write(uploaded_io.read)
     end
-      render :layout => false, :status => (:ok)
+
+    parser = DrawingParser.new
+    parser.delay.parse_and_save(Rails.root.join('uploads', uploaded_io.original_filename));
+    render :layout => false, :status => (:ok)
   rescue e
       @error = e.message
       logger.warn("upload failed " + e.stack_trace)

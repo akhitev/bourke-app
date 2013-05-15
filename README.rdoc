@@ -17,3 +17,6 @@ Sample document is in doc/
 1. Fork this repo
 2. Make your commits
 3. Send an email with your public repository link
+
+== How to start delayed_job
+script/delayed_job start
