@@ -1,8 +1,11 @@
 BourkeApp::Application.routes.draw do
 
-  root :to => 'drawings#index'
-  post 'drawings/upload' => 'drawings#upload'
 
+  resources :drawings, :only => [:index,:show,:upload] do
+    post 'upload', :on => :collection
+  end
+
+  root :to => 'drawings#index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -23,6 +23,14 @@ end
 gem 'jquery-rails'
 gem "remotipart", "~> 1.0"
 
+gem 'delayed_job_active_record'
+
+
+group :test do
+  gem "minitest-rails"
+  gem "turn"
+end
+
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
