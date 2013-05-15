@@ -1,7 +1,14 @@
 require 'test_helper'
 
-class DrawingTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+describe Drawing do
+  before do
+    @drawing = Drawing.new
+  end
+
+  it "should have drawing " do
+    @drawing.must_respond_to(:drawing)
+  end
+
+
+
 end

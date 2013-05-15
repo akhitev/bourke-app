@@ -1,13 +1,66 @@
 class DrawingParser
-  def parse(file)
-    reader = PDF::Reader.new(file)
-    #TODO are we support only 1 page docs?
-    page = reader.page(1)
-    puts page.fonts
-    puts page.text
-    puts page.raw_content
-    return Drawing.new
-  rescue e
-    logger.error("error during processing file #{file.name} : #{e.message}")
+  @@command_path = "pdftotext"
+
+  def self.command_path
+    @@command_path
   end
-end
+
+
+  def parse(file_name)
+    Rails.logger.debug "parsing file #{file_name}"
+    execute_command(file_name)
+    drawing = process_txt(file_name)
+    return drawing
+  rescue => e
+    Rails.logger.error("error during processing file : #{e.message}")
+    return false
+  end
+
+  def execute_command file_name
+    puts "#{self.class.command_path} "
+    output = `#{self.class.command_path} "#{file_name.to_s}" `
+    exit_code = $?
+    case exit_code
+      when 0 || nil
+        return output
+      else
+        Rails.logger.error("Error processing #{file_name} exit code: #{exit_code}")
+    end
+  end
+
+  def process_txt file_name
+    Rails.logger.debug("process txt file #{file_name}")
+    drawing = Drawing.new
+    f = File.open(txt_file_name(file_name),'r')
+
+    while !f.eof? do
+      #TODO need to look on other samples about empty lines
+      line = f.readline
+
+      if (line.include? "PROJECT:")
+        puts line
+        #skip empty line
+        f.readline
+        drawing[:project] = f.readline.strip
+      elsif (line.include? "DRAWING:")
+        puts line
+        f.readline
+        drawing[:drawing] = f.readline.strip
+      elsif (line.include? "LOCATION:")
+        puts line
+        drawing[:location] = line.gsub("LOCATION:","").strip
+      end
+    end
+    return drawing
+  end
+
+  def txt_file_name(file_name)
+
+    dirname  = File.dirname(file_name)
+    basename = File.basename(file_name, ".*")
+    txt_name = dirname + "/" + basename + ".txt"
+    puts " txt_name " + txt_name.to_s
+    return txt_name.to_s
+  end
+
+  end

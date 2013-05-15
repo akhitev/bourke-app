@@ -24,7 +24,7 @@ gem 'jquery-rails'
 gem "remotipart", "~> 1.0"
 
 gem 'delayed_job_active_record'
-
+gem 'pdf-reader'
 
 group :test do
   gem "minitest-rails"
